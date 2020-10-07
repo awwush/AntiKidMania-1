@@ -10,16 +10,28 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Container(
-          child: Text("Hello Students!"),
+        padding: const EdgeInsets.fromLTRB(5.0, 28, 5.0, 1.0),
+        child: Container(height: 100.0,
+          decoration: new BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            shape: BoxShape.rectangle,
+            color: Colors.purple,
+            gradient: new LinearGradient(colors: [Colors.cyan, Colors.amber]),
           ),
+          child: Text(
+            "Anti Kid Mania!",
+            textAlign: TextAlign.center,
+            style: TextStyle(height: 10.0, fontSize: 30.0, color: Colors.white),
+          ),
+          // child: new FlutterLogo(
+          //   size: 10.0,
+          // ),
+        ),
       ),
     );
   }
 }
 // This part is commented because it comes by default
-
 
 // class MyApp extends StatelessWidget {
 //   // This widget is the root of your application.
