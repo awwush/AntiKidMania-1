@@ -9,7 +9,17 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Sign Up"),
+      child: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Got your credentials...",
+              ))
+        ],
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:anti_kid_mania/pages/root_page.dart';
+import 'package:anti_kid_mania/pages/sign_up_page.dart';
 import 'package:anti_kid_mania/signin.dart';
 import 'package:flutter/material.dart';
 
@@ -24,12 +25,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/' : (context) => RootPage(params: params),
+        '/SignUp' : (context) => SignUp(),
+      },
       title: 'Flutter-login',
       debugShowCheckedModeBanner: true,
       theme: new ThemeData(
         primarySwatch: params['primarySwatch'],
       ),
-      home: new RootPage(params: params),
+//      home: new RootPage(params: params),
     );
   }
 }

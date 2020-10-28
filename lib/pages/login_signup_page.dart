@@ -191,9 +191,9 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   Widget _showSecondaryButton() {
     return new FlatButton(
       child: _textSecondaryButton(),
-      onPressed: _formMode == FormMode.LOGIN
-          ? SignUp()
-          : _changeFormToLogin,
+      onPressed: () {
+        Navigator.pushNamed(context, "/SignUp");
+      },
     );
   }
 
@@ -230,6 +230,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
             style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300));
         break;
       case FormMode.FORGOTPASSWORD:
+        // TODO: TO CHANGE THE TEXT TO BUTTON FOR RESET PASSWORD
         return new Text('Enter your email address or ... Cancel',
             style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300));
         break;
