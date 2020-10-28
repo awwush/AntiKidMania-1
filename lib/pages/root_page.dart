@@ -24,9 +24,9 @@ class _RootPageState extends State<RootPage> {
   }
   @override
   Widget build(BuildContext context) {
-    const bool showLogin = true;
+    const bool showLoginPage = true;
 
-    switch(showLogin) {
+    switch(showLoginPage) {
       case true:
         return new LoginSignUpPage(params: widget.params);
         break;

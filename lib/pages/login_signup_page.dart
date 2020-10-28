@@ -1,3 +1,4 @@
+import 'package:anti_kid_mania/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginSignUpPage extends StatefulWidget {
@@ -8,7 +9,7 @@ class LoginSignUpPage extends StatefulWidget {
   _LoginSignUpPageState createState() => _LoginSignUpPageState();
 }
 
-enum FormMode { LOGIN, FORGOTPASSWORD, SIGNUP }
+enum FormMode { LOGIN, FORGOTPASSWORD }
 
 class _LoginSignUpPageState extends State<LoginSignUpPage> {
   final _formKey = new GlobalKey<FormState>();
@@ -30,13 +31,13 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     super.initState();
   }
 
-  void _changeFormToSignUp() {
-    _formKey.currentState.reset();
-    _errorMessage = "";
-    setState(() {
-      _formMode = FormMode.SIGNUP;
-    });
-  }
+//  void _changeFormToSignUp() {
+//    _formKey.currentState.reset();
+//    _errorMessage = "";
+//    setState(() {
+//      _formMode = FormMode.SIGNUP;
+//    });
+//  }
 
   void _changeFormToLogin() {
     _formKey.currentState.reset();
@@ -97,7 +98,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
               _showErrorMessage(),
             ],
           ),
-        ));
+        ),
+    );
   }
 
   Widget _showPasswordInput() {
@@ -190,7 +192,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     return new FlatButton(
       child: _textSecondaryButton(),
       onPressed: _formMode == FormMode.LOGIN
-          ? _changeFormToSignUp
+          ? SignUp()
           : _changeFormToLogin,
     );
   }
@@ -213,10 +215,6 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         return new Text('Login',
             style: new TextStyle(fontSize: 20.0, color: Colors.white));
         break;
-      case FormMode.SIGNUP:
-        return new Text('Create account',
-            style: new TextStyle(fontSize: 20.0, color: Colors.white));
-        break;
       case FormMode.FORGOTPASSWORD:
         return new Text('Reset password',
             style: new TextStyle(fontSize: 20.0, color: Colors.white));
@@ -229,10 +227,6 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     switch (_formMode) {
       case FormMode.LOGIN:
         return new Text('Create an account',
-            style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300));
-        break;
-      case FormMode.SIGNUP:
-        return new Text('Have an account? Sign in',
             style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300));
         break;
       case FormMode.FORGOTPASSWORD:
