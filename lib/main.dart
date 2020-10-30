@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         '/SignUp' : (context) => SignUp(),
       },
       title: 'Flutter-login',
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       theme: new ThemeData(
         primarySwatch: params['primarySwatch'],
       ),

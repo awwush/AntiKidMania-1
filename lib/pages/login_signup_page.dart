@@ -85,19 +85,28 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   Widget _showBody() {
     return new Container(
         padding: EdgeInsets.all(16.0),
-        child: new Form(
-          key: _formKey,
-          child: new ListView(
-            shrinkWrap: true,
-            children: [
-              _showEmailInput(),
-              _showPasswordInput(),
-              _showPrimaryButton(),
-              _showSecondaryButton(),
-              _showForgotPasswordButton(),
-              _showErrorMessage(),
-            ],
-          ),
+        child: Column(
+          children: [const SizedBox(height: 50,),
+            Image.asset('assets/images/logo.png',
+            height: 100,
+            width: 100,
+            ),
+            const SizedBox(height: 50,),
+            new Form(
+              key: _formKey,
+              child: new ListView(
+                shrinkWrap: true,
+                children: [
+                  _showEmailInput(),
+                  _showPasswordInput(),
+                  _showPrimaryButton(),
+                  _showSecondaryButton(),
+                  _showForgotPasswordButton(),
+                  _showErrorMessage(),
+                ],
+              ),
+            ),
+          ],
         ),
     );
   }
@@ -105,7 +114,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   Widget _showPasswordInput() {
     if (_formMode != FormMode.FORGOTPASSWORD) {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+        padding: const EdgeInsets.all(10.0),
         child: new TextFormField(
           maxLines: 1,
           obscureText: true,
@@ -114,7 +123,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
               hintText: 'Password',
               icon: new Icon(
                 Icons.lock,
-                color: Colors.grey,
+                color: Colors.red,
               )),
           validator: (value) =>
           value.isEmpty ? 'Password can\'t be empty' : null,

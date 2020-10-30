@@ -36,6 +36,5 @@ class _RootPageState extends State<RootPage> {
       default:
         return _waitingScreen();
     }
-    return Container();
   }
 }
