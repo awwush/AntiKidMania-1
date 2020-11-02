@@ -1,6 +1,6 @@
 # anti_kid_mania
 
-Android application to help students manage their syallbus and learn to manage time.
+Android application to help students manage their syallbus and learn to manage time and parents track there child's progress.
 
 ## Getting Started
 
