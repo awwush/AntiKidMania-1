@@ -56,6 +56,7 @@ class _SignUpState extends State<SignUp> {
                         _showName(),
                         _showAge(),
                         _showStandard(),
+                        _showSchool(),
                       ]
                     ),
                   ),
@@ -136,6 +137,30 @@ class _SignUpState extends State<SignUp> {
 //          fillColor: Colors.orange,
           labelText: "standard",
           hintText: "1-12",
+          icon: Icon(
+            Icons.date_range_rounded,
+            color: Colors.lightBlue,
+          ),
+        ),
+        validator: (value) {
+          // TODO: show standard validation limit till 12
+        },
+      ),
+    );
+  }
+
+
+  Widget _showSchool(){
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        keyboardType: TextInputType.name,
+        maxLines: 1,
+        decoration: new InputDecoration(
+//          just trying, of no use
+//          fillColor: Colors.orange,
+          labelText: "School Name",
+          hintText: "DAV Pulic School",
           icon: Icon(
             Icons.date_range_rounded,
             color: Colors.lightBlue,
