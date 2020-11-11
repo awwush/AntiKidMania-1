@@ -60,14 +60,16 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     _isIos = Theme.of(context).platform == TargetPlatform.iOS;
 
     return Scaffold(
-      appBar: new AppBar(
+      appBar: new AppBar(centerTitle: true,
         title: new Text(widget.params['appName']),
       ),
-      body: Stack(
-        children: <Widget>[
-          _showBody(),
-          _showCircularProgress(),
-        ],
+      body: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            _showBody(),
+            _showCircularProgress(),
+          ],
+        ),
       ),
     );
   }
@@ -124,7 +126,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
               icon: new Icon(
                 Icons.lock,
                 color: Colors.red,
-              )),
+              ),
+          ),
           validator: (value) =>
           value.isEmpty ? 'Password can\'t be empty' : null,
           onSaved: (value) => _password = value.trim(),
@@ -170,7 +173,10 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
               color: Colors.redAccent,
             )
         ),
-        validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
+        validator: (value) {
+          _errorMessage = value.isEmpty ? 'Email can\'t be empty' : null;
+        return _errorMessage;
+        },
         onSaved: (value) => _email = value.trim(),
       ),
     );
@@ -191,7 +197,12 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                 borderRadius: new BorderRadius.circular(30.0)),
             color: widget.params['buttonColor'],
             child: _textPrimaryButton(),
-            onPressed: () {},
+            onPressed: () {
+              if(_formKey.currentState.validate()){
+                print("in validate login pressed");
+                // TODO: add login firebase connectivity
+                }
+              },
           ),
         )
     );

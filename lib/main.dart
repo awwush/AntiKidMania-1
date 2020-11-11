@@ -10,7 +10,7 @@ void main() {
 class MyApp extends StatelessWidget {
   static const primarySwatch = Colors.green;
   static const buttonColor = Colors.green;
-  static const appName = 'My App';
+  static const appName = 'Login';
   static const homePageUnverified = false;
 
   final params = {
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         '/' : (context) => RootPage(params: params),
         '/SignUp' : (context) => SignUp(),
       },
-      title: 'Flutter-login',
+      title: 'Anti Kid-Mania',
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
         primarySwatch: params['primarySwatch'],
