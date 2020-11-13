@@ -61,6 +61,7 @@ class _SignUpState extends State<SignUp> {
                           _showAge(),
                           _showStandard(),
                           _showSchool(),
+                          _email(),
                           SizedBox(height: 20),
                           _submitDetails(),
                         ]
@@ -170,6 +171,29 @@ class _SignUpState extends State<SignUp> {
           hintText: "DAV Pulic School",
           icon: Icon(
             Icons.school,
+            color: Colors.lightBlue,
+          ),
+        ),
+        validator: (value) {
+          // TODO: show standard validation limit till 12
+        },
+      ),
+    );
+  }
+
+  Widget _email(){
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        keyboardType: TextInputType.email,
+        maxLines: 1,
+        decoration: new InputDecoration(
+//          just trying, of no use
+//          fillColor: Colors.orange,
+          labelText: "email",
+          hintText: "abc@efg.com",
+          icon: Icon(
+            Icons.email,
             color: Colors.lightBlue,
           ),
         ),
