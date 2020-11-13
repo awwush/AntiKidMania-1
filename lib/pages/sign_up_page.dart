@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -11,60 +13,65 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: Column(
-        children: [
-          SizedBox(height: 50),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: RichText(
-                    text: TextSpan(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 50),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: RichText(
+                      text: TextSpan(
 //                      style: Theme.of(context).textTheme.bodyText2,
-                      children: [
-                        WidgetSpan(
-                            child: Icon(Icons.arrow_back)
-                        ),
-                          TextSpan(text: "Login",
-                          style: TextStyle(
-                            fontSize: 20,
+                        children: [
+                          WidgetSpan(
+                              child: Icon(Icons.arrow_back)
                           ),
-                          )
-                      ],
-                    ),
-                  )
+                            TextSpan(text: "Login",
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                            )
+                        ],
+                      ),
+                    )
 //                  Text(" Back to Login")
+                ),
               ),
             ),
-          ),
-          Center(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 10),
+            Center(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 10),
 
-                Container(
-                  child: Form(
-                    key: _signUpKey,
-                    child: Column(
-                      children: [
-                        _registerText(),
-                        _showName(),
-                        _showAge(),
-                        _showStandard(),
-                        _showSchool(),
-                      ]
+                  Container(
+                    child: Form(
+                      key: _signUpKey,
+                      child: Column(
+                        children: [
+                          _registerText(),
+                          SizedBox(height: 20),
+                          _showName(),
+                          _showAge(),
+                          _showStandard(),
+                          _showSchool(),
+                          SizedBox(height: 20),
+                          _submitDetails(),
+                        ]
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -74,7 +81,7 @@ class _SignUpState extends State<SignUp> {
       child: Container(
 
           child: Text("/ Registration details \\",
-          style: Theme.of(context).textTheme.headline4,),
+          style: Theme.of(context).textTheme.headline5,),
       ),
     );
   }
@@ -90,7 +97,7 @@ class _SignUpState extends State<SignUp> {
           labelText: "Name",
           hintText: "Enter full name",
           icon: Icon(
-              Icons.email,
+              Icons.perm_contact_calendar,
               color: Colors.lightBlue,
           ),
         ),
@@ -138,7 +145,7 @@ class _SignUpState extends State<SignUp> {
           labelText: "standard",
           hintText: "1-12",
           icon: Icon(
-            Icons.date_range_rounded,
+            Icons.class__rounded,
             color: Colors.lightBlue,
           ),
         ),
@@ -162,12 +169,27 @@ class _SignUpState extends State<SignUp> {
           labelText: "School Name",
           hintText: "DAV Pulic School",
           icon: Icon(
-            Icons.date_range_rounded,
+            Icons.school,
             color: Colors.lightBlue,
           ),
         ),
         validator: (value) {
           // TODO: show standard validation limit till 12
+        },
+      ),
+    );
+  }
+
+
+  Widget _submitDetails(){
+    return Center(
+      child: ElevatedButton(
+        child: Text("Register me"),
+        onPressed: () async {
+        await Firebase.initializeApp();
+        print("initialized");
+        Stream<QuerySnapshot> snapshot = FirebaseFirestore.instance.collection("Registration").snapshots();
+        print(snapshot);
         },
       ),
     );

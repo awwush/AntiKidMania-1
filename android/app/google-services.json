@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "220751750495",
+    "firebase_url": "https://anti-kid-mania.firebaseio.com",
+    "project_id": "anti-kid-mania",
+    "storage_bucket": "anti-kid-mania.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220751750495:android:1e9b1b116a349d52cf02ea",
+        "android_client_info": {
+          "package_name": "antikidmania.anti_kid_mania"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220751750495-sk118vfoa01iqh0ndc6kbh9n0dvan4j6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzic9kVb2PAPDaxDHyiW3myczmb92xz2I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220751750495-sk118vfoa01iqh0ndc6kbh9n0dvan4j6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
