@@ -57,7 +57,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    _isIos = Theme.of(context).platform == TargetPlatform.iOS;
+//    _isIos = Theme.of(context).platform == TargetPlatform.iOS;
 
     return Scaffold(
       appBar: new AppBar(centerTitle: true,
@@ -212,6 +212,10 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     return new FlatButton(
       child: _textSecondaryButton(),
       onPressed: () {
+//        Not required
+//        setState(() {
+//          print("setted");
+//        });
         Navigator.pushNamed(context, "/SignUp");
       },
     );

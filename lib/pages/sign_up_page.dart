@@ -9,6 +9,14 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _signUpKey = new GlobalKey<FormState>();
+
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _ageController = TextEditingController();
+  final _schoolController = TextEditingController();
+  final _standardController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,11 +40,11 @@ class _SignUpState extends State<SignUp> {
                           WidgetSpan(
                               child: Icon(Icons.arrow_back)
                           ),
-                            TextSpan(text: "Login",
+                          TextSpan(text: "Login",
                             style: TextStyle(
                               fontSize: 20,
                             ),
-                            )
+                          )
                         ],
                       ),
                     )
@@ -54,17 +62,19 @@ class _SignUpState extends State<SignUp> {
                     child: Form(
                       key: _signUpKey,
                       child: Column(
-                        children: [
-                          _registerText(),
-                          SizedBox(height: 20),
-                          _showName(),
-                          _showAge(),
-                          _showStandard(),
-                          _showSchool(),
-                          _email(),
-                          SizedBox(height: 20),
-                          _submitDetails(),
-                        ]
+                          children: [
+                            _registerText(),
+                            SizedBox(height: 20),
+                            _email(),
+                            _showName(),
+                            _showAge(),
+                            _showStandard(),
+                            _showSchool(),
+                            _firstPassword(),
+                            SizedBox(height: 20),
+                            _submitDetails(),
+
+                          ]
                       ),
                     ),
                   )
@@ -81,7 +91,7 @@ class _SignUpState extends State<SignUp> {
     return Center(
       child: Container(
 
-          child: Text("/ Registration details \\",
+        child: Text("/ Registration details \\",
           style: Theme.of(context).textTheme.headline5,),
       ),
     );
@@ -90,18 +100,19 @@ class _SignUpState extends State<SignUp> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        keyboardType: TextInputType.name,
-        maxLines: 1,
-        decoration: new InputDecoration(
+          controller: _nameController,
+          keyboardType: TextInputType.name,
+          maxLines: 1,
+          decoration: new InputDecoration(
 //          just trying, of no use
 //          fillColor: Colors.orange,
-          labelText: "Name",
-          hintText: "Enter full name",
-          icon: Icon(
+            labelText: "Name",
+            hintText: "Enter full name",
+            icon: Icon(
               Icons.perm_contact_calendar,
               color: Colors.lightBlue,
+            ),
           ),
-        ),
           validator: (value) {
             // TODO: show name validation
           }
@@ -114,6 +125,7 @@ class _SignUpState extends State<SignUp> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        controller: _ageController,
         keyboardType: TextInputType.datetime,
         maxLines: 1,
         decoration: new InputDecoration(
@@ -138,6 +150,7 @@ class _SignUpState extends State<SignUp> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        controller: _standardController,
         keyboardType: TextInputType.number,
         maxLines: 1,
         decoration: new InputDecoration(
@@ -162,6 +175,7 @@ class _SignUpState extends State<SignUp> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        controller: _schoolController,
         keyboardType: TextInputType.name,
         maxLines: 1,
         decoration: new InputDecoration(
@@ -185,7 +199,8 @@ class _SignUpState extends State<SignUp> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        keyboardType: TextInputType.email,
+        controller: _emailController,
+        keyboardType: TextInputType.emailAddress,
         maxLines: 1,
         decoration: new InputDecoration(
 //          just trying, of no use
@@ -198,24 +213,69 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
         validator: (value) {
-          // TODO: show standard validation limit till 12
+          print("email :$value");
+//          TODO: Add validation regex
         },
       ),
     );
   }
 
+
+  Widget _firstPassword(){
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: _passwordController,
+        keyboardType: TextInputType.visiblePassword,
+        maxLines: 1,
+        obscureText: true,
+        decoration: new InputDecoration(
+//          just trying, of no use
+//          fillColor: Colors.orange,
+          labelText: "password",
+          hintText: "********",
+          icon: Icon(
+            Icons.email,
+            color: Colors.lightBlue,
+          ),
+        ),
+        validator: (value) {
+          // TODO: check limit of characters and combination
+        },
+      ),
+    );
+  }
 
   Widget _submitDetails(){
     return Center(
       child: ElevatedButton(
         child: Text("Register me"),
         onPressed: () async {
-        await Firebase.initializeApp();
-        print("initialized");
-        Stream<QuerySnapshot> snapshot = FirebaseFirestore.instance.collection("Registration").snapshots();
-        print(snapshot);
+          // initialized for registration
+          await Firebase.initializeApp();
+          print("initialized");
+
+          _signUpKey.currentState.validate();
+//        print(_ageController.text);
+//        var name, age, school, standard, email;
+          await FirebaseFirestore.instance.collection('Registration').doc(_emailController.text).set({
+            "name": _nameController.text,
+            "age": _ageController.text,
+            "school": _schoolController.text,
+            "standard": _standardController.text,
+            "email": _emailController.text,
+          });
+//        Checking whether fetching is performed or not
+
+//        FirebaseFirestore.instance.collection('Registration').get().then((snapshotValues) => {
+//          snapshotValues.docs.forEach((element) {print( element.data());})
+//        }
+//        );
+
         },
       ),
     );
   }
+
 }
+
