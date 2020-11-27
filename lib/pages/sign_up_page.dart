@@ -20,7 +20,6 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -37,10 +36,9 @@ class _SignUpState extends State<SignUp> {
                       text: TextSpan(
 //                      style: Theme.of(context).textTheme.bodyText2,
                         children: [
-                          WidgetSpan(
-                              child: Icon(Icons.arrow_back)
-                          ),
-                          TextSpan(text: "Login",
+                          WidgetSpan(child: Icon(Icons.arrow_back)),
+                          TextSpan(
+                            text: "Login",
                             style: TextStyle(
                               fontSize: 20,
                             ),
@@ -49,33 +47,30 @@ class _SignUpState extends State<SignUp> {
                       ),
                     )
 //                  Text(" Back to Login")
-                ),
+                    ),
               ),
             ),
             Center(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 10),
-
                   Container(
                     child: Form(
                       key: _signUpKey,
-                      child: Column(
-                          children: [
-                            _registerText(),
-                            SizedBox(height: 20),
-                            _email(),
-                            _showName(),
-                            _showAge(),
-                            _showStandard(),
-                            _showSchool(),
-                            _firstPassword(),
-                            SizedBox(height: 20),
-                            _submitDetails(),
-
-                          ]
-                      ),
+                      child: Column(children: [
+                        _registerText(),
+                        SizedBox(height: 20),
+                        _email(),
+                        _showName(),
+                        _showAge(),
+                        _showStandard(),
+                        _showSchool(),
+                        _firstPassword(),
+                        SizedBox(height: 20),
+                        _submitDetails(),
+                      ]),
                     ),
                   )
                 ],
@@ -87,16 +82,18 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _registerText(){
+  Widget _registerText() {
     return Center(
       child: Container(
-
-        child: Text("/ Registration details \\",
-          style: Theme.of(context).textTheme.headline5,),
+        child: Text(
+          "/ Registration details \\",
+          style: Theme.of(context).textTheme.headline5,
+        ),
       ),
     );
   }
-  Widget _showName(){
+
+  Widget _showName() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
@@ -115,13 +112,11 @@ class _SignUpState extends State<SignUp> {
           ),
           validator: (value) {
             // TODO: show name validation
-          }
-      ),
+          }),
     );
   }
 
-
-  Widget _showAge(){
+  Widget _showAge() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
@@ -145,8 +140,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-
-  Widget _showStandard(){
+  Widget _showStandard() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
@@ -170,8 +164,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-
-  Widget _showSchool(){
+  Widget _showSchool() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
@@ -195,7 +188,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _email(){
+  Widget _email() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
@@ -220,8 +213,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-
-  Widget _firstPassword(){
+  Widget _firstPassword() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
@@ -240,13 +232,14 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
         validator: (value) {
+          print("password: $value");
           // TODO: check limit of characters and combination
         },
       ),
     );
   }
 
-  Widget _submitDetails(){
+  Widget _submitDetails() {
     return Center(
       child: ElevatedButton(
         child: Text("Register me"),
@@ -256,26 +249,51 @@ class _SignUpState extends State<SignUp> {
           print("initialized");
 
           _signUpKey.currentState.validate();
+          bool alreadyRegistered = false;
+          await FirebaseFirestore.instance.collection('Registration').doc(_emailController.text).get().then((alreadyPresentEmail) => {
+
+                        if(alreadyPresentEmail.exists) {
+                          alreadyRegistered = true
+                        }
+          });
 //        print(_ageController.text);
 //        var name, age, school, standard, email;
-          await FirebaseFirestore.instance.collection('Registration').doc(_emailController.text).set({
-            "name": _nameController.text,
-            "age": _ageController.text,
-            "school": _schoolController.text,
-            "standard": _standardController.text,
-            "email": _emailController.text,
-          });
+          if(!alreadyRegistered) {
+            await FirebaseFirestore.instance
+                .collection('Registration')
+                .doc(_emailController.text)
+                .set({
+              "name": _nameController.text,
+              "age": _ageController.text,
+              "school": _schoolController.text,
+              "standard": _standardController.text,
+              "email": _emailController.text,
+            });
+
+          }
+          else{
+            print("Already registered...");
+            showDialog(
+                context: context,
+              builder: (ctx) => AlertDialog(
+                title: Text("Email is already registered!",
+                textAlign: TextAlign.justify,),
+                actions: [
+                  ElevatedButton(onPressed: ()  {_emailController.clear(); Navigator.pop(ctx);}, child: Text("Change email")),
+//                  ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/ForgotPassword');}, child: Text("Forgot password?")),
+                ],
+
+              )
+            );
+          }
 //        Checking whether fetching is performed or not
 
 //        FirebaseFirestore.instance.collection('Registration').get().then((snapshotValues) => {
 //          snapshotValues.docs.forEach((element) {print( element.data());})
 //        }
 //        );
-
         },
       ),
     );
   }
-
 }
-

@@ -184,8 +184,6 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
 
 
 
-
-
   Widget _showPrimaryButton() {
     return new Padding(
         padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),

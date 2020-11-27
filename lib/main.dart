@@ -1,3 +1,4 @@
+import 'package:anti_kid_mania/pages/forgot_password.dart';
 import 'package:anti_kid_mania/pages/root_page.dart';
 import 'package:anti_kid_mania/pages/sign_up_page.dart';
 import 'package:anti_kid_mania/signin.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/' : (context) => RootPage(params: params),
         '/SignUp' : (context) => SignUp(),
+        '/ForgotPassword' : (context) => ForgotPassword(params: params),
       },
       title: 'Anti Kid-Mania',
       debugShowCheckedModeBanner: false,
