@@ -9,6 +9,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _signUpKey = new GlobalKey<FormState>();
+  final _scaffoldGlobalKey = new GlobalKey<ScaffoldState>();
 
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -20,6 +21,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldGlobalKey,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -239,6 +241,8 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  //TODO: ADD CONFIRM PASSWORD, COMPARE FIRST AND CONFIRM PASSWORD
+
   Widget _submitDetails() {
     return Center(
       child: ElevatedButton(
@@ -268,7 +272,25 @@ class _SignUpState extends State<SignUp> {
               "school": _schoolController.text,
               "standard": _standardController.text,
               "email": _emailController.text,
+              "password": _passwordController.text,
+
             });
+            _scaffoldGlobalKey.currentState.showSnackBar(SnackBar(content: Text("Registering please wait...")));
+
+            //TODO : add the feature of saving the login information
+            showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+//                backgroundColor: Colors.redAccent,
+                  title: Text("Remember email and password for future use.",
+                    textAlign: TextAlign.justify,),
+                  actions: [
+                    ElevatedButton(onPressed: ()  {Navigator.popAndPushNamed(ctx ,'/Dashboard');}, child: Text("Change email")),
+//                  ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/ForgotPassword');}, child: Text("Forgot password?")),
+                  ],
+
+                )
+            );
 
           }
           else{
@@ -276,8 +298,9 @@ class _SignUpState extends State<SignUp> {
             showDialog(
                 context: context,
               builder: (ctx) => AlertDialog(
+//                backgroundColor: Colors.redAccent,
                 title: Text("Email is already registered!",
-                textAlign: TextAlign.justify,),
+                textAlign: TextAlign.right,),
                 actions: [
                   ElevatedButton(onPressed: ()  {_emailController.clear(); Navigator.pop(ctx);}, child: Text("Change email")),
 //                  ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/ForgotPassword');}, child: Text("Forgot password?")),
