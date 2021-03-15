@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:anti_kid_mania/pages/storage/secure.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -10,7 +12,9 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final _signUpKey = new GlobalKey<FormState>();
   final _scaffoldGlobalKey = new GlobalKey<ScaffoldState>();
+  // final _storage = FlutterSecureStorage();
 
+  final SecureStorage secureStorage = SecureStorage();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _ageController = TextEditingController();
@@ -84,6 +88,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+
   Widget _registerText() {
     return Center(
       child: Container(
@@ -113,7 +118,7 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
           validator: (value) {
-            // TODO: show name validation
+
           }),
     );
   }
@@ -208,8 +213,15 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
         validator: (value) {
-          print("email :$value");
-//          TODO: Add validation regex
+         Pattern email = "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+         RegExp regex = new RegExp(email);
+         print("here");
+         if(regex.hasMatch(value)){
+           return null;
+         }
+         else
+          return "Enter the email-id";
+//          TODO: Add proper regexp for email..
         },
       ),
     );
@@ -229,7 +241,7 @@ class _SignUpState extends State<SignUp> {
           labelText: "password",
           hintText: "********",
           icon: Icon(
-            Icons.email,
+            Icons.security_rounded,
             color: Colors.lightBlue,
           ),
         ),
@@ -248,67 +260,87 @@ class _SignUpState extends State<SignUp> {
       child: ElevatedButton(
         child: Text("Register me"),
         onPressed: () async {
-          // initialized for registration
-          await Firebase.initializeApp();
-          print("initialized");
 
-          _signUpKey.currentState.validate();
-          bool alreadyRegistered = false;
-          await FirebaseFirestore.instance.collection('Registration').doc(_emailController.text).get().then((alreadyPresentEmail) => {
+          if (_signUpKey.currentState.validate()) {
+            //Gives true or false
+            print(_signUpKey.currentState.validate());
+            bool alreadyRegistered = false;
 
-                        if(alreadyPresentEmail.exists) {
-                          alreadyRegistered = true
-                        }
-          });
-//        print(_ageController.text);
-//        var name, age, school, standard, email;
-          if(!alreadyRegistered) {
+            // checking if already registered
             await FirebaseFirestore.instance
                 .collection('Registration')
                 .doc(_emailController.text)
-                .set({
-              "name": _nameController.text,
-              "age": _ageController.text,
-              "school": _schoolController.text,
-              "standard": _standardController.text,
-              "email": _emailController.text,
-              "password": _passwordController.text,
+                .get()
+                .then((alreadyPresentEmail) => {
+                      if (alreadyPresentEmail.exists) {alreadyRegistered = true}
+                    });
 
-            });
-            _scaffoldGlobalKey.currentState.showSnackBar(SnackBar(content: Text("Registering please wait...")));
 
-            //TODO : add the feature of saving the login information
-            showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
+            if (!alreadyRegistered) {
+              await FirebaseFirestore.instance
+                  .collection('Registration')
+                  .doc(_emailController.text)
+                  .set({
+                "name": _nameController.text,
+                "age": _ageController.text,
+                "school": _schoolController.text,
+                "standard": _standardController.text,
+                "email": _emailController.text,
+                "password": _passwordController.text,
+              });
+
+              // _scaffoldGlobalKey.currentState.showSnackBar(
+              //     SnackBar(content: Text("Registering please wait...")));
+
+              //TODO : add the feature of saving the login information
+              showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
 //                backgroundColor: Colors.redAccent,
-                  title: Text("Remember email and password for future use.",
-                    textAlign: TextAlign.justify,),
-                  actions: [
-                    ElevatedButton(onPressed: ()  {Navigator.popAndPushNamed(ctx ,'/Dashboard');}, child: Text("Change email")),
+                        title: Text(
+                          "Great you registered!",
+                          textAlign: TextAlign.center,
+                        ),
+                        actions: [
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.popAndPushNamed(ctx, '/Dashboard');
+                              },
+                              child: Text("Dashboard")),
 //                  ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/ForgotPassword');}, child: Text("Forgot password?")),
-                  ],
+                        ],
+                      ));
 
-                )
-            );
 
-          }
-          else{
-            print("Already registered...");
-            showDialog(
-                context: context,
-              builder: (ctx) => AlertDialog(
+              secureStorage.writeSecureData("logged_in", true);
+
+            } else {
+              print("Already registered...");
+              showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
 //                backgroundColor: Colors.redAccent,
-                title: Text("Email is already registered!",
-                textAlign: TextAlign.right,),
-                actions: [
-                  ElevatedButton(onPressed: ()  {_emailController.clear(); Navigator.pop(ctx);}, child: Text("Change email")),
+                        title: Text(
+                          "Email is already registered!",
+                          textAlign: TextAlign.center,
+                        ),
+                        actions: [
+                          ElevatedButton(
+                              onPressed: () {
+                                _emailController.clear();
+                                Navigator.pop(ctx);
+                              },
+                              child: Text("Change email")),
 //                  ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/ForgotPassword');}, child: Text("Forgot password?")),
-                ],
-
-              )
-            );
+                        ],
+                      ));
+            }
           }
+          else {
+            _scaffoldGlobalKey.currentState.showSnackBar(
+            SnackBar(content: Text("Please fill the required fields!")));
+          }
+//
 //        Checking whether fetching is performed or not
 
 //        FirebaseFirestore.instance.collection('Registration').get().then((snapshotValues) => {
