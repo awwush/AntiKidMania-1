@@ -2,6 +2,7 @@
 import 'package:anti_kid_mania/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -121,8 +122,6 @@ class _SignInState extends State<SignIn> {
         keyboardType: TextInputType.emailAddress,
         maxLines: 1,
         decoration: new InputDecoration(
-//          just trying, of no use
-//          fillColor: Colors.orange,
           labelText: "email",
           hintText: "abc@efg.com",
           icon: Icon(
@@ -176,7 +175,7 @@ class _SignInState extends State<SignIn> {
       child: ElevatedButton(
         child: Text("Login"),
         onPressed: () async {
-          await _authorize.SignIn("Foo", "bar");
+          await Provider.of<Authorize>(context, listen: false).SignIn("Foo", "bar");
         },
       ),
     );

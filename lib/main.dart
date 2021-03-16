@@ -16,21 +16,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // bool authenticate = true;
-  //
-  // void toggleViewAuth() {
-  //   setState(() {
-  //     authenticate = !authenticate;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<Authorize>(
-      create: (context) => Authorize(),
-      child: MaterialApp(
-        home: Wrapper(),
-      ),
-    );
+    return Wrapper();
   }
 }
