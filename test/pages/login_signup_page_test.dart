@@ -1,9 +1,9 @@
 import 'package:anti_kid_mania/main.dart';
-import 'package:anti_kid_mania/pages/login_signup_page.dart';
+import 'file:///F:/IDEs/androidstudioprojects/anti_kid_mania/lib/not_part_of_project/login_signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:anti_kid_mania/pages/login_signup_page.dart';
+import 'file:///F:/IDEs/androidstudioprojects/anti_kid_mania/lib/not_part_of_project/login_signup_page.dart';
 
 //Widget createLoginScreen() => ChangeNotifierProvider(
 //      child: MaterialApp(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:anti_kid_mania/pages/storage/secure.dart';
+import 'file:///F:/IDEs/androidstudioprojects/anti_kid_mania/lib/not_part_of_project/storage/secure.dart';
 
 class SignUp extends StatefulWidget {
   @override

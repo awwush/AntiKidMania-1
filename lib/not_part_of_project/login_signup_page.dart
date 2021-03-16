@@ -1,4 +1,4 @@
-import 'package:anti_kid_mania/pages/sign_up_page.dart';
+import 'file:///F:/IDEs/androidstudioprojects/anti_kid_mania/lib/not_part_of_project/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginSignUpPage extends StatefulWidget {

@@ -1,7 +1,7 @@
-import 'package:anti_kid_mania/pages/dashboard/subjects.dart';
-import 'package:anti_kid_mania/pages/home_page.dart';
-import 'package:anti_kid_mania/pages/login_signup_page.dart';
-import 'package:anti_kid_mania/pages/storage/secure.dart';
+import 'file:///F:/IDEs/androidstudioprojects/anti_kid_mania/lib/not_part_of_project/dashboard/subjects.dart';
+import 'file:///F:/IDEs/androidstudioprojects/anti_kid_mania/lib/not_part_of_project/home_page.dart';
+import 'file:///F:/IDEs/androidstudioprojects/anti_kid_mania/lib/not_part_of_project/login_signup_page.dart';
+import 'file:///F:/IDEs/androidstudioprojects/anti_kid_mania/lib/not_part_of_project/storage/secure.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
