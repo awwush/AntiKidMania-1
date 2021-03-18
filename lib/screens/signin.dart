@@ -110,8 +110,8 @@ class _SignInState extends State<SignIn> {
   }
 
   Widget _logo() {
-    return Center(
-        child: CircleAvatar(
+     return Center(
+          child: CircleAvatar(
             radius: 40.0,
             backgroundImage: AssetImage('images/logo_login.png'),
           )
