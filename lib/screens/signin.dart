@@ -72,27 +72,34 @@ class _SignInState extends State<SignIn> {
                     child: Form(
                       key: _signUpKey,
                       child: Column(children: [
+                        _logo(),
                         _registerText(),
                         SizedBox(height: 20),
                         _email(),
+                        SizedBox(height: 15),
                         _Password(),
-                        SizedBox(height: 20),
+                        SizedBox(height: 70),
                         _submitDetails(),
-                        SizedBox(height: 20),
+                        SizedBox(height: 70),
                         Center(
-                          child: Text("Or"),
+                          child: Text("Don't have an Account ?"),
                         ),
-                        SizedBox(height: 20),
                         ElevatedButton(
                             onPressed: () {
                               print("Register clicked login");
                               widget.toggleView();
                             },
                             child: Text("Register"),
-                        )
-                      ]),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.blue,
+                              shadowColor: Colors.red,
+                              elevation: 5,
+                            ),
+                        ),
+                      ],
                     ),
                   )
+                  ),
                 ],
               ),
             ),
@@ -102,81 +109,146 @@ class _SignInState extends State<SignIn> {
     );
   }
 
+  Widget _logo() {
+    return Center(
+        child: CircleAvatar(
+            radius: 40.0,
+            backgroundImage: AssetImage('images/logo_login.png'),
+          )
+    );
+  }
+
   Widget _registerText() {
     return Center(
       child: Container(
+        padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 30.0 ),
+
+
         child: Text(
-          "/ Login details \\",
-          style: Theme.of(context).textTheme.headline5,
-        ),
-      ),
+          "Welcome back!",
+          style: Theme.of(context).textTheme.headline4,
+
+       ),
+     ),
     );
   }
 
 
   Widget _email() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextFormField(
-        controller: _emailController,
-        keyboardType: TextInputType.emailAddress,
-        maxLines: 1,
-        decoration: new InputDecoration(
-          labelText: "email",
-          hintText: "abc@efg.com",
-          icon: Icon(
-            Icons.email,
-            color: Colors.lightBlue,
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+
+    return Container(
+      width: deviceWidth * 0.70,
+      height: deviceHeight * 0.10,
+      decoration: myBoxDecoration(),
+
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextFormField(
+          controller: _emailController,
+          keyboardType: TextInputType.emailAddress,
+          maxLines: 1,
+          decoration: new InputDecoration(
+            labelText: "email",
+            hintText: "abc@efg.com",
+            icon: Icon(
+              Icons.email,
+              color: Colors.lightBlue,
+            ),
           ),
-        ),
-        validator: (value) {
-          Pattern email = "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
-          RegExp regex = new RegExp(email);
-          print("here");
-          if(regex.hasMatch(value)){
-            return null;
-          }
-          else
-            return "Enter the email-id";
+          validator: (value) {
+            Pattern email = "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+            RegExp regex = new RegExp(email);
+            print("here");
+            if(regex.hasMatch(value)){
+              return null;
+            }
+            else
+              return "Enter the email-id";
 //          TODO: Add proper regexp for email..
-        },
+          },
+        ),
       ),
+
     );
   }
 
   Widget _Password() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextFormField(
-        controller: _passwordController,
-        keyboardType: TextInputType.visiblePassword,
-        maxLines: 1,
-        obscureText: true,
-        decoration: new InputDecoration(
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+
+    return Container(
+      width: deviceWidth * 0.70,
+      height: deviceHeight * 0.10,
+      decoration: myBoxDecoration(),
+
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextFormField(
+          controller: _passwordController,
+          keyboardType: TextInputType.visiblePassword,
+          maxLines: 1,
+          obscureText: true,
+          decoration: new InputDecoration(
 //          just trying, of no use
 //          fillColor: Colors.orange,
-          labelText: "password",
-          hintText: "********",
-          icon: Icon(
-            Icons.security_rounded,
-            color: Colors.lightBlue,
+            labelText: "password",
+            hintText: "********",
+            icon: Icon(
+              Icons.security_rounded,
+              color: Colors.lightBlue,
+            ),
           ),
+          validator: (value) {
+            print("password: $value");
+            // TODO: check limit of characters and combination
+          },
         ),
-        validator: (value) {
-          print("password: $value");
-          // TODO: check limit of characters and combination
-        },
+      ),
+
+
+    );
+  }
+  BoxDecoration myBoxDecoration() {
+    return BoxDecoration(
+      border: Border.all(
+      width: 3,
+      color: Colors.blue,
+
+
+    ),
+      borderRadius: BorderRadius.all(
+        Radius.circular(10.0)
       ),
     );
   }
 
   Widget _submitDetails() {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     return Center(
-      child: ElevatedButton(
-        child: Text("Login"),
-        onPressed: () async {
-          await Provider.of<Authorize>(context, listen: false).SignIn("Foo", "bar");
-        },
+      child: Container(
+        width: deviceWidth * 0.70,
+        height: deviceHeight * 0.10,
+
+
+
+        child: ElevatedButton(
+          child: Text("Login"),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.teal,
+            onPrimary: Colors.white,
+            shadowColor: Colors.red,
+            elevation: 5,
+
+
+          ),
+
+          onPressed: () async {
+            await Provider.of<Authorize>(context, listen: false).SignIn("Foo", "bar");
+          },
+        ),
       ),
     );
   }
