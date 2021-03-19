@@ -14,7 +14,7 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
 
-  final _signUpKey = new GlobalKey<FormState>();
+  final _signInKey = new GlobalKey<FormState>();
   final _scaffoldGlobalKey = new GlobalKey<ScaffoldState>();
   // final _storage = FlutterSecureStorage();
 
@@ -70,7 +70,7 @@ class _SignInState extends State<SignIn> {
                   SizedBox(height: 10),
                   Container(
                     child: Form(
-                      key: _signUpKey,
+                      key: _signInKey,
                       child: Column(children: [
                         _logo(),
                         _registerText(),
@@ -110,12 +110,15 @@ class _SignInState extends State<SignIn> {
   }
 
   Widget _logo() {
-     return Center(
-          child: CircleAvatar(
-            radius: 40.0,
-            backgroundImage: AssetImage('images/logo_login.png'),
-          )
-    );
+     return Padding(
+       padding: EdgeInsets.all(5.0),
+       child: Center(
+            child: Image(
+              width: 90.0,
+              image: AssetImage('assets/images/logo_login.png'),
+            )
+    ),
+     );
   }
 
   Widget _registerText() {
@@ -144,7 +147,7 @@ class _SignInState extends State<SignIn> {
       decoration: myBoxDecoration(),
 
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         child: TextFormField(
           controller: _emailController,
           keyboardType: TextInputType.emailAddress,
@@ -184,7 +187,7 @@ class _SignInState extends State<SignIn> {
       decoration: myBoxDecoration(),
 
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         child: TextFormField(
           controller: _passwordController,
           keyboardType: TextInputType.visiblePassword,
@@ -201,7 +204,14 @@ class _SignInState extends State<SignIn> {
             ),
           ),
           validator: (value) {
-            print("password: $value");
+            print("password signin validation");
+            if (value.length < 6){
+              return "Password should be atleast 6 characters";
+            }
+            if(!value.contains("[@#\$!_*]+")){
+              return "Should contain a special character";
+            }
+            return null;
             // TODO: check limit of characters and combination
           },
         ),
@@ -213,7 +223,7 @@ class _SignInState extends State<SignIn> {
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
       border: Border.all(
-      width: 3,
+      width: 2,
       color: Colors.blue,
 
 
@@ -232,8 +242,6 @@ class _SignInState extends State<SignIn> {
         width: deviceWidth * 0.70,
         height: deviceHeight * 0.10,
 
-
-
         child: ElevatedButton(
           child: Text("Login"),
           style: ElevatedButton.styleFrom(
@@ -241,12 +249,17 @@ class _SignInState extends State<SignIn> {
             onPrimary: Colors.white,
             shadowColor: Colors.red,
             elevation: 5,
-
-
           ),
 
           onPressed: () async {
-            await Provider.of<Authorize>(context, listen: false).SignIn("Foo", "bar");
+            //change not
+            if (!_signInKey.currentState.validate()){
+              await Provider.of<Authorize>(context, listen: false).SignIn("Foo", "bar");
+            }
+            else{
+              SnackBar(content: Text("Please fill the details."));
+            }
+
           },
         ),
       ),

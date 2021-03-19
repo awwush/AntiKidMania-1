@@ -81,7 +81,6 @@ class _RegisterState extends State<Register> {
                         Center(
                           child: Text("Already have an Account..."),
                         ),
-
                         ElevatedButton(
                           onPressed: () {
                             print("Register clicked login");
@@ -95,7 +94,6 @@ class _RegisterState extends State<Register> {
                              ),
                         ),
                       ]
-
                     ),
                   ),
                   ),
@@ -141,7 +139,6 @@ class _RegisterState extends State<Register> {
               ),
             ),
             validator: (value) {
-
             }),
       ),
     );
@@ -151,13 +148,8 @@ class _RegisterState extends State<Register> {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
 
-
-
-
     return Container(
       width: deviceWidth * 0.90,
-
-
 
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -175,6 +167,7 @@ class _RegisterState extends State<Register> {
               color: Colors.lightBlue,
             ),
           ),
+
           validator: (value) {
             Pattern email = "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
             RegExp regex = new RegExp(email);
@@ -186,6 +179,7 @@ class _RegisterState extends State<Register> {
               return "Enter the email-id";
 //          TODO: Add proper regexp for email..
           },
+
         ),
       ),
     );
@@ -216,10 +210,19 @@ class _RegisterState extends State<Register> {
             color: Colors.lightBlue,
           ),
         ),
+
         validator: (value) {
           print("password: $value");
-          // TODO: check limit of characters and combination
+          if (value.length < 6){
+            return "Password should be atleast 6 characters";
+          }
+          if(!value.contains("[@#\$!_*]+")){
+            return "Should contain a special character";
+          }
+          return null;
+          // TODO : eck limit of characters and combination
         },
+
       ),
      ),
     );
@@ -232,8 +235,6 @@ class _RegisterState extends State<Register> {
       child: Container(
         width: deviceWidth * 0.90,
         height: deviceHeight * 0.10,
-
-
         child: ElevatedButton(
           child: Text("Register me"),
           style: ElevatedButton.styleFrom(
@@ -241,10 +242,9 @@ class _RegisterState extends State<Register> {
            onPrimary: Colors.white,
            shadowColor: Colors.red,
            elevation: 5,
-
-
             ),
           onPressed: () {
+            _signUpKey.currentState.validate();
             print("You have successfully registered");
           },
         ),
