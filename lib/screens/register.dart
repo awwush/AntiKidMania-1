@@ -1,5 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
 
-
+import 'package:crypto/crypto.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +15,6 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-
   final _signUpKey = new GlobalKey<FormState>();
   final _scaffoldGlobalKey = new GlobalKey<ScaffoldState>();
   // final _storage = FlutterSecureStorage();
@@ -20,17 +22,14 @@ class _RegisterState extends State<Register> {
   // final SecureStorage secureStorage = SecureStorage();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _ageController = TextEditingController();
-  final _schoolController = TextEditingController();
-  final _standardController = TextEditingController();
   final _passwordController = TextEditingController();
-
+  final _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldGlobalKey,
-      body:  SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(height: 50),
@@ -87,15 +86,14 @@ class _RegisterState extends State<Register> {
                             widget.toggleView();
                           },
                           child: Text("Sign in"),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.blue,
-                              shadowColor: Colors.red,
-                              elevation: 5,
-                             ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.blue,
+                            shadowColor: Colors.red,
+                            elevation: 5,
+                          ),
                         ),
-                      ]
+                      ]),
                     ),
-                  ),
                   ),
                 ],
               ),
@@ -138,8 +136,7 @@ class _RegisterState extends State<Register> {
                 color: Colors.lightBlue,
               ),
             ),
-            validator: (value) {
-            }),
+            validator: (value) {}),
       ),
     );
   }
@@ -150,7 +147,6 @@ class _RegisterState extends State<Register> {
 
     return Container(
       width: deviceWidth * 0.90,
-
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
@@ -167,19 +163,17 @@ class _RegisterState extends State<Register> {
               color: Colors.lightBlue,
             ),
           ),
-
           validator: (value) {
-            Pattern email = "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+            Pattern email =
+                "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
             RegExp regex = new RegExp(email);
             print("here");
-            if(regex.hasMatch(value)){
+            if (regex.hasMatch(value)) {
               return null;
-            }
-            else
+            } else
               return "Enter the email-id";
 //          TODO: Add proper regexp for email..
           },
-
         ),
       ),
     );
@@ -191,40 +185,43 @@ class _RegisterState extends State<Register> {
 
     return Container(
       width: deviceWidth * 0.90,
-
-
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
-         controller: _passwordController,
-         keyboardType: TextInputType.visiblePassword,
-         maxLines: 1,
-         obscureText: true,
-         decoration: new InputDecoration(
+          controller: _passwordController,
+          keyboardType: TextInputType.visiblePassword,
+          maxLines: 1,
+          obscureText: true,
+          decoration: new InputDecoration(
 //          just trying, of no use
 //          fillColor: Colors.orange,
-          labelText: "Password",
-          hintText: "********",
-          icon: Icon(
-            Icons.security_rounded,
-            color: Colors.lightBlue,
+            labelText: "Password",
+            hintText: "********",
+            icon: Icon(
+              Icons.security_rounded,
+              color: Colors.lightBlue,
+            ),
           ),
+          validator: (value) {
+            print("password sign in validation"+ _passwordController.text);
+            if (value.length < 6){
+              return "Password should be at least 6 characters";
+            }
+
+            //Checking password strength
+            Pattern passwordLength = "[@#\$!_*]+";
+            RegExp regex = new RegExp(passwordLength);
+            print("password length check sign in form");
+            if(regex.hasMatch(value)){
+              return null;
+            }
+            else{
+              return 'can only contain @, \$, _, #, *, !';
+            }
+            return null;
+          },
         ),
-
-        validator: (value) {
-          print("password: $value");
-          if (value.length < 6){
-            return "Password should be atleast 6 characters";
-          }
-          if(!value.contains("[@#\$!_*]+")){
-            return "Should contain a special character";
-          }
-          return null;
-          // TODO : eck limit of characters and combination
-        },
-
       ),
-     ),
     );
   }
 
@@ -238,14 +235,41 @@ class _RegisterState extends State<Register> {
         child: ElevatedButton(
           child: Text("Register me"),
           style: ElevatedButton.styleFrom(
-           primary: Colors.teal,
-           onPrimary: Colors.white,
-           shadowColor: Colors.red,
-           elevation: 5,
-            ),
-          onPressed: () {
-            _signUpKey.currentState.validate();
-            print("You have successfully registered");
+            primary: Colors.teal,
+            onPrimary: Colors.white,
+            shadowColor: Colors.red,
+            elevation: 5,
+          ),
+          onPressed: () async {
+            Response response;
+            var dio = new Dio();
+
+            if (_signUpKey.currentState.validate()) {
+              // Securing password
+              var bytes = utf8.encode(_passwordController.text);
+              var digest = sha512.convert(bytes);
+              try{
+                response = await dio.post(
+                    "https://server-for-app-ranjit1.herokuapp.com/register",
+                    data: {
+                      'name': _nameController.text,
+                      'email': _emailController.text,
+                      'password': digest.toString(),
+                    },
+                    options: Options(headers: {
+                      HttpHeaders.contentTypeHeader: "application/json",
+                    })).then((value) { print(value.runtimeType);});
+
+                print((response.extra));
+                print(json.decode(response.data));
+              }
+              catch(e){
+
+                print("in catch register");
+                // print(e);
+              }
+              // print("You have successfully registered");
+            }
           },
         ),
       ),

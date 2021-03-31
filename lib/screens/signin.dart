@@ -19,11 +19,7 @@ class _SignInState extends State<SignIn> {
   // final _storage = FlutterSecureStorage();
 
   // final SecureStorage secureStorage = SecureStorage();
-  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _ageController = TextEditingController();
-  final _schoolController = TextEditingController();
-  final _standardController = TextEditingController();
   final _passwordController = TextEditingController();
   Authorize _authorize = Authorize();
 
@@ -141,6 +137,7 @@ class _SignInState extends State<SignIn> {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
 
+
     return Container(
       width: deviceWidth * 0.70,
       height: deviceHeight * 0.10,
@@ -163,13 +160,12 @@ class _SignInState extends State<SignIn> {
           validator: (value) {
             Pattern email = "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
             RegExp regex = new RegExp(email);
-            print("here");
+            print("email pattern check sign in form");
             if(regex.hasMatch(value)){
               return null;
             }
             else
-              return "Enter the email-id";
-//          TODO: Add proper regexp for email..
+              return "Enter email-id in proper format";
           },
         ),
       ),
@@ -204,15 +200,24 @@ class _SignInState extends State<SignIn> {
             ),
           ),
           validator: (value) {
-            print("password signin validation");
+
+            // TODO: nO NEED OF THIS
+            print("password sign in validation"+ _passwordController.text);
             if (value.length < 6){
-              return "Password should be atleast 6 characters";
+              return "Password should be at least 6 characters";
             }
-            if(!value.contains("[@#\$!_*]+")){
-              return "Should contain a special character";
+
+            //Checking password strength
+            Pattern passwordLength = "[@#\$!_*]+";
+            RegExp regex = new RegExp(passwordLength);
+            print("password length check sign in form");
+            if(regex.hasMatch(value)){
+              return null;
+            }
+            else{
+              return 'can only contain @, \$, _, #, *, !';
             }
             return null;
-            // TODO: check limit of characters and combination
           },
         ),
       ),
@@ -239,7 +244,7 @@ class _SignInState extends State<SignIn> {
     double deviceHeight = MediaQuery.of(context).size.height;
     return Center(
       child: Container(
-        width: deviceWidth * 0.70,
+        width: deviceWidth * 0.50,
         height: deviceHeight * 0.10,
 
         child: ElevatedButton(
@@ -253,11 +258,13 @@ class _SignInState extends State<SignIn> {
 
           onPressed: () async {
             //change not
-            if (!_signInKey.currentState.validate()){
+            if (_signInKey.currentState.validate()){
               await Provider.of<Authorize>(context, listen: false).SignIn("Foo", "bar");
             }
             else{
-              SnackBar(content: Text("Please fill the details."));
+              _scaffoldGlobalKey.currentState.showSnackBar(
+                  SnackBar(content: Text("Please fill the details.")),
+              );
             }
 
           },
