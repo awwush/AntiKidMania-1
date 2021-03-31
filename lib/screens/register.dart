@@ -203,7 +203,7 @@ class _RegisterState extends State<Register> {
             ),
           ),
           validator: (value) {
-            print("password sign in validation"+ _passwordController.text);
+            print("password register validation"+ _passwordController.text);
             if (value.length < 6){
               return "Password should be at least 6 characters";
             }
@@ -211,7 +211,7 @@ class _RegisterState extends State<Register> {
             //Checking password strength
             Pattern passwordLength = "[@#\$!_*]+";
             RegExp regex = new RegExp(passwordLength);
-            print("password length check sign in form");
+            print("password length check register form");
             if(regex.hasMatch(value)){
               return null;
             }

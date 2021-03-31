@@ -199,23 +199,10 @@ class _SignInState extends State<SignIn> {
               color: Colors.lightBlue,
             ),
           ),
-          validator: (value) {
-
-            // TODO: nO NEED OF THIS
+          validator: (value){
             print("password sign in validation"+ _passwordController.text);
             if (value.length < 6){
-              return "Password should be at least 6 characters";
-            }
-
-            //Checking password strength
-            Pattern passwordLength = "[@#\$!_*]+";
-            RegExp regex = new RegExp(passwordLength);
-            print("password length check sign in form");
-            if(regex.hasMatch(value)){
-              return null;
-            }
-            else{
-              return 'can only contain @, \$, _, #, *, !';
+              return "At least 6 characters";
             }
             return null;
           },
