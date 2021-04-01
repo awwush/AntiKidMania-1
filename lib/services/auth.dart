@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 
@@ -10,7 +11,7 @@ class Authorize with ChangeNotifier{
 
   bool logged_in = false;
 
-  void Register(String name, String email, String password) async{
+  void Register(BuildContext context, String name, String email, String password) async{
 
     // todo : write s backend logic
 
@@ -30,6 +31,8 @@ class Authorize with ChangeNotifier{
       var map=Map<String, dynamic>.from(response.data);
       if(map.containsKey("err")){
         //  TODO: SHOW snackbar already registered, show the err message
+        final snackBar = SnackBar(content: Text("Already registered!"));
+        Scaffold.of(context).showSnackBar(snackBar);
         print("Key error, email id already exists");
         return ;
       }

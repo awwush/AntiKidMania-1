@@ -139,7 +139,13 @@ class _RegisterState extends State<Register> {
                 color: Colors.lightBlue,
               ),
             ),
-            validator: (value) {}),
+            validator: (value) {
+              if(value.isEmpty){
+                return "Enter proper name";
+              }else{
+                return null;
+              }
+            }),
       ),
     );
   }
@@ -244,17 +250,16 @@ class _RegisterState extends State<Register> {
             elevation: 5,
           ),
           onPressed: () async {
-            Response response;
-            var dio = new Dio();
 
             if (_signUpKey.currentState.validate()) {
               // Securing password
               var bytes = utf8.encode(_passwordController.text);
               var digest = sha512.convert(bytes);
-              await Provider.of<Authorize>(context, listen: false).Register(_nameController.text, _emailController.text, digest.toString());
+              await Provider.of<Authorize>(context, listen: false).Register(context,_nameController.text, _emailController.text, digest.toString());
             }else{
+              final snackbar = SnackBar(content: Text("Please fill the details."));
               _scaffoldGlobalKey.currentState.showSnackBar(
-                SnackBar(content: Text("Please fill the details.")),
+                snackbar,
               );
             }
           },

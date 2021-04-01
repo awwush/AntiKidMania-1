@@ -1,5 +1,8 @@
 
+import 'dart:convert';
+
 import 'package:anti_kid_mania/services/auth.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -244,16 +247,18 @@ class _SignInState extends State<SignIn> {
           ),
 
           onPressed: () async {
-            //change not
-            if (_signInKey.currentState.validate()){
-              await Provider.of<Authorize>(context, listen: false).SignIn("Foo", "bar");
-            }
-            else{
+
+            if (_signInKey.currentState.validate()) {
+              // Securing password
+              var bytes = utf8.encode(_passwordController.text);
+              var digest = sha512.convert(bytes);
+              await Provider.of<Authorize>(context, listen: false).SignIn(_emailController.text, digest.toString());
+            }else{
+              final snackbar = SnackBar(content: Text("Please fill the details."));
               _scaffoldGlobalKey.currentState.showSnackBar(
-                  SnackBar(content: Text("Please fill the details.")),
+                snackbar,
               );
             }
-
           },
         ),
       ),
