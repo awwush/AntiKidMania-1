@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:anti_kid_mania/models/RegisterParent.dart';
+import 'package:anti_kid_mania/services/auth.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -76,7 +79,7 @@ class _RegisterState extends State<Register> {
                         _firstPassword(),
                         SizedBox(height: 50),
                         _submitDetails(),
-                        SizedBox(height: 160),
+                        SizedBox(height: 50),
                         Center(
                           child: Text("Already have an Account..."),
                         ),
@@ -230,7 +233,7 @@ class _RegisterState extends State<Register> {
     double deviceHeight = MediaQuery.of(context).size.height;
     return Center(
       child: Container(
-        width: deviceWidth * 0.90,
+        width: deviceWidth * 0.70,
         height: deviceHeight * 0.10,
         child: ElevatedButton(
           child: Text("Register me"),
@@ -248,27 +251,11 @@ class _RegisterState extends State<Register> {
               // Securing password
               var bytes = utf8.encode(_passwordController.text);
               var digest = sha512.convert(bytes);
-              try{
-                response = await dio.post(
-                    "https://server-for-app-ranjit1.herokuapp.com/register",
-                    data: {
-                      'name': _nameController.text,
-                      'email': _emailController.text,
-                      'password': digest.toString(),
-                    },
-                    options: Options(headers: {
-                      HttpHeaders.contentTypeHeader: "application/json",
-                    })).then((value) { print(value.runtimeType);});
-
-                print((response.extra));
-                print(json.decode(response.data));
-              }
-              catch(e){
-
-                print("in catch register");
-                // print(e);
-              }
-              // print("You have successfully registered");
+              await Provider.of<Authorize>(context, listen: false).Register(_nameController.text, _emailController.text, digest.toString());
+            }else{
+              _scaffoldGlobalKey.currentState.showSnackBar(
+                SnackBar(content: Text("Please fill the details.")),
+              );
             }
           },
         ),
