@@ -11,51 +11,63 @@ class Authorize with ChangeNotifier{
 
   bool logged_in = false;
 
-  void Register(BuildContext context, String name, String email, String password) async{
+  void Register(String name, String email, String password, int verificationCode) async{
 
     // todo : write s backend logic
 
+    print("In register function");
     var dio = new Dio();
-    try{
+
+      print("In register function sending post request" + verificationCode.toString());
       var response = await dio.post(
           "https://server-for-app-ranjit1.herokuapp.com/register",
           data: {
             'name': name,
             'email': email,
             'password': password,
+            'verificationCode': verificationCode.toString(),
           },
           options: Options(headers: {
             HttpHeaders.contentTypeHeader: "application/json",
           }));
 
       var map=Map<String, dynamic>.from(response.data);
+      print("Register function " + response.data.toString());
       if(map.containsKey("err")){
-        //  TODO: SHOW snackbar already registered, show the err message
-        final snackBar = SnackBar(content: Text("Already registered!"));
-        Scaffold.of(context).showSnackBar(snackBar);
-        print("Key error, email id already exists");
-        return ;
+        print(map["err"]);
       }
       else{
-        //  TODO: show snackbar registered successflully
+        print(name + " registered succesfully");
         logged_in = true;
         notifyListeners();
       }
-
-    }
-    catch(e){
-      //  TODO: SOMETHING WRONG HOW A MESSAGE AND SAY TRY LATER
-    }
-
   }
 
   void SignIn(String email, String password) async{
 
-    // todo : write signIn backend logic
+    print("In sign in  function");
+    var dio = new Dio();
 
+    var response = await dio.post(
+        "https://server-for-app-ranjit1.herokuapp.com/login",
+        data: {
+          'email': email,
+          'password': password,
+        },
+        options: Options(headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+        }));
 
-    logged_in = true;
-    notifyListeners();
+    var map=Map<String, dynamic>.from(response.data);
+    print("sign in function ");
+    if(map.containsKey("err")){
+      print(map["err"]);
+    }
+    else{
+      print(" Logged in successful");
+      logged_in = true;
+      notifyListeners();
+    }
   }
 
   void SignOut(){

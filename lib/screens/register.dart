@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:anti_kid_mania/models/RegisterParent.dart';
 import 'package:anti_kid_mania/services/auth.dart';
@@ -77,6 +78,7 @@ class _RegisterState extends State<Register> {
                         _email(),
                         _showName(),
                         _firstPassword(),
+                        _confirmPass(),
                         SizedBox(height: 50),
                         _submitDetails(),
                         SizedBox(height: 50),
@@ -234,6 +236,50 @@ class _RegisterState extends State<Register> {
     );
   }
 
+
+  Widget _confirmPass() {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+
+    return Container(
+      width: deviceWidth * 0.90,
+
+
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextFormField(
+          controller: _confirmPasswordController,
+          keyboardType: TextInputType.text,
+          maxLines: 1,
+          obscureText: true,
+          decoration: new InputDecoration(
+
+            labelText: "Confirm Password",
+            hintText: "****",
+            icon: Icon(
+              Icons.lock,
+              color: Colors.lightBlue,
+            ),
+          ),
+
+          validator: (String value) {
+            if (value.isEmpty) {
+              return 'Cannot be empty';
+            }
+            if (_passwordController.text != _confirmPasswordController.text) {
+              return "Password field does not match";
+            }
+            return null;
+          },
+
+
+        ),
+      ),
+    );
+  }
+
+
+
   Widget _submitDetails() {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
@@ -251,11 +297,17 @@ class _RegisterState extends State<Register> {
           ),
           onPressed: () async {
 
+
+            circularIndicator(context);
             if (_signUpKey.currentState.validate()) {
               // Securing password
               var bytes = utf8.encode(_passwordController.text);
               var digest = sha512.convert(bytes);
-              await Provider.of<Authorize>(context, listen: false).Register(context,_nameController.text, _emailController.text, digest.toString());
+              var random  = new Random();
+              var verificationCode = random.nextInt(10000)+1000;
+              var response = await Provider.of<Authorize>(context, listen: false).Register(_nameController.text,
+                  _emailController.text, digest.toString(), verificationCode);
+              // print("response"+ response);
             }else{
               final snackbar = SnackBar(content: Text("Please fill the details."));
               _scaffoldGlobalKey.currentState.showSnackBar(
@@ -265,6 +317,12 @@ class _RegisterState extends State<Register> {
           },
         ),
       ),
+    );
+  }
+
+  Widget circularIndicator(BuildContext context){
+    return Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

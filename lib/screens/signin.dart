@@ -144,7 +144,6 @@ class _SignInState extends State<SignIn> {
     return Container(
       width: deviceWidth * 0.70,
       height: deviceHeight * 0.10,
-      decoration: myBoxDecoration(),
 
       child: Padding(
         padding: const EdgeInsets.all(4.0),
@@ -183,7 +182,6 @@ class _SignInState extends State<SignIn> {
     return Container(
       width: deviceWidth * 0.70,
       height: deviceHeight * 0.10,
-      decoration: myBoxDecoration(),
 
       child: Padding(
         padding: const EdgeInsets.all(4.0),
