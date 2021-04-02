@@ -217,7 +217,7 @@ class _RegisterState extends State<Register> {
             ),
           ),
           validator: (value) {
-            print("password register validation"+ _passwordController.text);
+            print("password register validation");
             if (value.length < 6){
               return "Password should be at least 6 characters";
             }
@@ -299,13 +299,15 @@ class _RegisterState extends State<Register> {
             elevation: 5,
           ),
           onPressed: () async {
+
             if (_signUpKey.currentState.validate()) {
               // Securing password
               onLoading();
               var bytes = utf8.encode(_passwordController.text);
               var digest = sha512.convert(bytes);
               var random  = new Random();
-              var verificationCode = random.nextInt(10000)+1000;
+              // Six digit otp, sent on mail
+              var verificationCode = random.nextInt(999999)+100000;
               String response = await Provider.of<Authorize>(context, listen: false).Register(_nameController.text,
                   _emailController.text, digest.toString(), verificationCode);
 
@@ -317,15 +319,15 @@ class _RegisterState extends State<Register> {
                 );
               }else if(response == "already exists"){
                 Navigator.pop(context);
-                ErrorShow("Email already registered");
+                errorShow("Email already registered");
               }
 
-              print("response"+ response);
-            }else{
+              print("response from Register function: "+ response);
+            }
+
+            else{
               final snackbar = SnackBar(content: Text("Please fill the details."));
-              _scaffoldGlobalKey.currentState.showSnackBar(
-                snackbar,
-              );
+              _scaffoldGlobalKey.currentState.showSnackBar(snackbar);
             }
           },
         ),
@@ -353,6 +355,8 @@ class _RegisterState extends State<Register> {
       },
     );
   }
+
+
   void onLoading() {
     showDialog(
       barrierDismissible: false,
@@ -364,7 +368,6 @@ class _RegisterState extends State<Register> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-
               children: [
                 CircularProgressIndicator(),
                 Text("...Registering"),
@@ -377,7 +380,7 @@ class _RegisterState extends State<Register> {
   }
 
 
-  void ErrorShow(errorMessage) {
+  void errorShow(errorMessage) {
     showDialog(
         barrierDismissible: true,
         context: context,
@@ -391,7 +394,6 @@ class _RegisterState extends State<Register> {
 
                 children: [
                   Text(errorMessage),
-
                 ],
               ),
             ),

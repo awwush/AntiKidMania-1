@@ -34,15 +34,19 @@ class Authorize with ChangeNotifier{
           }));
 
       var map=Map<String, dynamic>.from(response.data);
+
+      // Response received from server
       print("Register function " + response.data.toString());
       if(map.containsKey("err")){
-        print(map["err"]);
+        print("Error from server: " + map["err"]);
+        // Don't change below return
         return "already exists";
       }
       else{
         print("Verification code sent");
         loggedIn = false;
         verificationCodeSent = true;
+        // Don't change below return
         return "Verification Page";
         // notifyListeners();
       }

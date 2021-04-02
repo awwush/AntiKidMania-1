@@ -9,9 +9,15 @@ class VerificationCode extends StatefulWidget {
 class _VerificationCodeState extends State<VerificationCode> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      child: Text("Verifcatin"),
+    //WILL POP SCOPE DISABLES BACK BUTTON
+    return WillPopScope(
+      // ignore: missing_return
+      onWillPop: () {},
+      child: Container(
+        height: 50,
+        child: Text("VERIFICATION"),
+      //  TODO: ADD UI TO ENTER A SIX DIGIT OTP, ADD OPTION OF RESEND CODE TOO.
+      ),
     );
   }
 }
