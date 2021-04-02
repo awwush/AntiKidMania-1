@@ -9,9 +9,11 @@ import 'package:provider/provider.dart';
 
 class Authorize with ChangeNotifier{
 
-  bool logged_in = false;
+  bool loggedIn = false;
+  bool verificationCodeSent = false;
+  bool verificationStatus = false;
 
-  void Register(String name, String email, String password, int verificationCode) async{
+  Future<String> Register(String name, String email, String password, int verificationCode) async{
 
     // todo : write s backend logic
 
@@ -35,11 +37,14 @@ class Authorize with ChangeNotifier{
       print("Register function " + response.data.toString());
       if(map.containsKey("err")){
         print(map["err"]);
+        return "already exists";
       }
       else{
-        print(name + " registered succesfully");
-        logged_in = true;
-        notifyListeners();
+        print("Verification code sent");
+        loggedIn = false;
+        verificationCodeSent = true;
+        return "Verification Page";
+        // notifyListeners();
       }
   }
 
@@ -65,7 +70,7 @@ class Authorize with ChangeNotifier{
     }
     else{
       print(" Logged in successful");
-      logged_in = true;
+      loggedIn = true;
       notifyListeners();
     }
   }
@@ -74,7 +79,7 @@ class Authorize with ChangeNotifier{
 
     // todo: Logout the user
 
-    logged_in = false;
+    loggedIn = false;
     notifyListeners();
   //  dummy
   }

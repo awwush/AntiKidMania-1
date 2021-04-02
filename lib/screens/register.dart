@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:anti_kid_mania/models/RegisterParent.dart';
+import 'package:anti_kid_mania/screens/verificationCode.dart';
 import 'package:anti_kid_mania/services/auth.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
@@ -79,8 +80,10 @@ class _RegisterState extends State<Register> {
                         _showName(),
                         _firstPassword(),
                         _confirmPass(),
+                        // circularIndicator(context),
                         SizedBox(height: 50),
                         _submitDetails(),
+                        _test(),
                         SizedBox(height: 50),
                         Center(
                           child: Text("Already have an Account..."),
@@ -296,18 +299,28 @@ class _RegisterState extends State<Register> {
             elevation: 5,
           ),
           onPressed: () async {
-
-
-            circularIndicator(context);
             if (_signUpKey.currentState.validate()) {
               // Securing password
+              onLoading();
               var bytes = utf8.encode(_passwordController.text);
               var digest = sha512.convert(bytes);
               var random  = new Random();
               var verificationCode = random.nextInt(10000)+1000;
-              var response = await Provider.of<Authorize>(context, listen: false).Register(_nameController.text,
+              String response = await Provider.of<Authorize>(context, listen: false).Register(_nameController.text,
                   _emailController.text, digest.toString(), verificationCode);
-              // print("response"+ response);
+
+              if(response == "Verification Page"){
+                //THis to pop out the dialog box which appears after pressing register button
+                Navigator.pop(context);
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => VerificationCode())
+                );
+              }else if(response == "already exists"){
+                Navigator.pop(context);
+                ErrorShow("Email already registered");
+              }
+
+              print("response"+ response);
             }else{
               final snackbar = SnackBar(content: Text("Please fill the details."));
               _scaffoldGlobalKey.currentState.showSnackBar(
@@ -323,6 +336,67 @@ class _RegisterState extends State<Register> {
   Widget circularIndicator(BuildContext context){
     return Center(
       child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget _test(){
+    return ElevatedButton(
+      child: Text("test"),
+      style: ElevatedButton.styleFrom(
+        primary: Colors.teal,
+        onPrimary: Colors.white,
+        shadowColor: Colors.red,
+        elevation: 5,
+      ),
+      onPressed: () async {
+          onLoading();
+      },
+    );
+  }
+  void onLoading() {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context){
+        return Dialog(
+          backgroundColor: Colors.greenAccent,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+
+              children: [
+                CircularProgressIndicator(),
+                Text("...Registering"),
+              ],
+            ),
+          ),
+        );
+      }
+    );
+  }
+
+
+  void ErrorShow(errorMessage) {
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (BuildContext context){
+          return Dialog(
+            backgroundColor: Colors.greenAccent,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+
+                children: [
+                  Text(errorMessage),
+
+                ],
+              ),
+            ),
+          );
+        }
     );
   }
 }

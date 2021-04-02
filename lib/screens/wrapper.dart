@@ -23,8 +23,8 @@ class _WrapperState extends State<Wrapper> {
           home: Consumer<Authorize>(
             builder: (context, Authorize, child) {
 
-              print("Builder Wrapper: " + Authorize.logged_in.toString());
-              return Authorize.logged_in ? Home() : Authenticate();
+              print("Builder Wrapper: " + Authorize.loggedIn.toString());
+              return Authorize.loggedIn ? Home() : Authenticate();
             },
           ),
         ),
