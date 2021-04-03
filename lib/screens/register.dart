@@ -351,7 +351,9 @@ class _RegisterState extends State<Register> {
         elevation: 5,
       ),
       onPressed: () async {
-          onLoading();
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => VerificationCode())
+        );
       },
     );
   }
