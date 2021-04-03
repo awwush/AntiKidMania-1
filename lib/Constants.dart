@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:anti_kid_mania/sizeConfig.dart';
 
+const otpFieldVertical = 10.0;
+const otpFieldHorizontal = 40.0;
+
+
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(
@@ -9,14 +13,14 @@ const kPrimaryGradientColor = LinearGradient(
   colors: [Color(0xFFFFA53E), Color(0xFFFF7643)],
 );
 const kSecondaryColor = Color(0xFF979797);
-const kTextColor = Color(0xFF757575);
+const kTextColor = Colors.deepOrange;
 
 const kAnimationDuration = Duration(milliseconds: 200);
 
 final headingStyle = TextStyle(
-  fontSize: 10,
-  fontWeight: FontWeight.bold,
-  color: Colors.black,
+  fontSize: 16,
+  // fontWeight: FontWeight.bold,
+  color: Colors.blue,
   height: 1.5,
 );
 

@@ -42,153 +42,198 @@ class _OtpFormState extends State<OtpForm> {
   }
   @override
   Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: 20,
-                child: TextFormField(
-                  autofocus: true,
-                  obscureText: true,
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(fontSize: 24),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 20
+    return Card(
+      color : Colors.greenAccent,
+      child: Form(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 20,
+                    child: TextFormField(
+                      maxLength: 1,
+                      autofocus: true,
+                      obscureText: true,
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(fontSize: 24, color: Colors.black),
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: otpFieldVertical,
+                              horizontal: otpFieldHorizontal,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(color: kTextColor)
+                          )
                       ),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(color: kTextColor)
-                      )
+                      onChanged: (value) {
+                        //also need to store value
+                        nextField(value, pin2FocusNode);
+                      },
+                    ),
                   ),
-                  onChanged: (value) {
-                    //also need to store value
-                    nextField(value, pin2FocusNode);
-                  },
-                ),
-              ),
-              SizedBox(
-                width: 20,
-                child: TextFormField(
-                  focusNode: pin2FocusNode,
-                  obscureText: true,
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(fontSize: 24),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(color: kTextColor)
-                      )
-                  ),
-                  onChanged: (value) {
-                    nextField( value, pin3FocusNode);
-                  },
-                ),
-              ),
-              SizedBox(
-                width: 20,
-                child: TextFormField(
-                  focusNode: pin3FocusNode,
-                  obscureText: true,
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(fontSize: 24),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(color: kTextColor)
-                      )
-                  ),
-                  onChanged: (value) {},
-                ),
-              ),
-              SizedBox(
-                width: 20,
-                child: TextFormField(
-                  focusNode: pin4FocusNode,
-                  obscureText: true,
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(fontSize: 24),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(color: kTextColor)
-                      )
-                  ),
-                  onChanged: (value) {
-                    nextField( value,  pin4FocusNode);
-                  },
-                ),
-              ),
-              SizedBox(
-                width: 20,
-                child: TextFormField(
-                  focusNode: pin5FocusNode,
-                  obscureText: true,
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(fontSize: 24),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 20
+                  SizedBox(
+                    width: 20,
+                    child: TextFormField(
+                      focusNode: pin2FocusNode,
+                      obscureText: true,
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(fontSize: 24),
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: otpFieldVertical,
+                            horizontal: otpFieldHorizontal,),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(color: kTextColor)
+                          )
                       ),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(color: kTextColor)
-                      )
+                      onChanged: (value) {
+                        nextField( value, pin3FocusNode);
+                      },
+                    ),
                   ),
-                  onChanged: (value) {
-                    nextField( value,  pin5FocusNode);
-                  },
-                ),
-              ),
-              SizedBox(
-                width: 20,
-                child: TextFormField(
-                  focusNode: pin6FocusNode,
-                  obscureText: true,
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(fontSize: 24),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 20
+                  SizedBox(
+                    width: 20,
+                    child: TextFormField(
+                      focusNode: pin3FocusNode,
+                      obscureText: true,
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(fontSize: 24),
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: otpFieldVertical,
+                            horizontal: otpFieldHorizontal,),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(color: kTextColor)
+                          )
                       ),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(color: kTextColor)
-                      )
+                      onChanged: (value) {},
+                    ),
                   ),
-                  onChanged: (value) {
-                    pin6FocusNode.unfocus();
-                  },
-                ),
+                  SizedBox(
+                    width: 20,
+                    child: TextFormField(
+                      focusNode: pin4FocusNode,
+                      obscureText: true,
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(fontSize: 24),
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: otpFieldVertical,
+                            horizontal: otpFieldHorizontal,),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(color: kTextColor)
+                          )
+                      ),
+                      onChanged: (value) {
+                        nextField( value,  pin4FocusNode);
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                    child: TextFormField(
+                      focusNode: pin5FocusNode,
+                      obscureText: true,
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(fontSize: 24),
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: otpFieldVertical,
+                            horizontal: otpFieldHorizontal,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(color: kTextColor)
+                          )
+                      ),
+                      onChanged: (value) {
+                        nextField( value,  pin5FocusNode);
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                    child: TextFormField(
+                      focusNode: pin6FocusNode,
+                      obscureText: true,
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(fontSize: 24),
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: otpFieldVertical,
+                            horizontal: otpFieldHorizontal,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(color: kTextColor)
+                          )
+                      ),
+                      onChanged: (value) {
+                        pin6FocusNode.unfocus();
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                   // DefaultButton
+
+                ],
               ),
-
-
-            ],
-
-          ),
-          SizedBox(height: SizeConfig.screenHeight * 0.15),
-          DefaultButton(
-            text: "Continue",
-            press: () {},
-          ) // DefaultButton
-
-        ],
+            ),
+            DefaultButton(
+              text: "Continue",
+              press: () {},
+            )
+          ],
+        ),
       ),
     );
+  return Card(
+    child: Center(
+      child: Form(
+        child: Row(
+          children: [
+          SizedBox(
+          width: 20,
+          height: 20,
+          child: TextFormField(
+            autofocus: true,
+            obscureText: true,
+            keyboardType: TextInputType.number,
+            style: TextStyle(fontSize: 24),
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(
+                    vertical: 20
+                ),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide(color: kTextColor)
+                )
+            ),
+            onChanged: (value) {
+              //also need to store value
+              nextField(value, pin2FocusNode);
+            },
+          ),
+        ),
+      ],
+      ),
+    ),
+    ),
+  );
   }
 }
