@@ -21,9 +21,9 @@ class Body extends StatelessWidget {
                   // resend your otp
                 },
 
-               child: Text("Resend OTP Code",
-                style: TextStyle(decoration: TextDecoration.underline),
-              ),
+                child: Text("Resend OTP Code",
+                  style: TextStyle(decoration: TextDecoration.underline),
+                ),
               ),
 
 
@@ -103,12 +103,12 @@ class _OtpFormState extends State<OtpForm> {
                   style: TextStyle(fontsize: 24),
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: getProportionateScreenWidth(15)),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(color: kTextColor)
-                    )
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: getProportionateScreenWidth(15)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(color: kTextColor)
+                      )
                   ),
                   onChanged: (value) {
                     //also need to store value

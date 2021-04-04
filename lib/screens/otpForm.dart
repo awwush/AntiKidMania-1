@@ -43,7 +43,7 @@ class _OtpFormState extends State<OtpForm> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color : Colors.greenAccent,
+      color : Colors.white54,
       child: Form(
         child: Column(
           children: [
@@ -68,7 +68,7 @@ class _OtpFormState extends State<OtpForm> {
                           ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: kTextColor)
+                              borderSide: BorderSide(color: Colors.teal)
                           )
                       ),
                       onChanged: (value) {
@@ -83,7 +83,7 @@ class _OtpFormState extends State<OtpForm> {
                       focusNode: pin2FocusNode,
                       obscureText: true,
                       keyboardType: TextInputType.number,
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(color: Colors.white, fontSize: 24),
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -91,7 +91,7 @@ class _OtpFormState extends State<OtpForm> {
                             horizontal: otpFieldHorizontal,),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: kTextColor)
+                              borderSide: BorderSide(color: Colors.teal)
                           )
                       ),
                       onChanged: (value) {
@@ -113,7 +113,7 @@ class _OtpFormState extends State<OtpForm> {
                             horizontal: otpFieldHorizontal,),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: kTextColor)
+                              borderSide: BorderSide(color: Colors.teal)
                           )
                       ),
                       onChanged: (value) {},
@@ -133,7 +133,7 @@ class _OtpFormState extends State<OtpForm> {
                             horizontal: otpFieldHorizontal,),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: kTextColor)
+                              borderSide: BorderSide(color: Colors.teal)
                           )
                       ),
                       onChanged: (value) {
@@ -156,7 +156,7 @@ class _OtpFormState extends State<OtpForm> {
                           ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: kTextColor)
+                              borderSide: BorderSide(color: Colors.teal)
                           )
                       ),
                       onChanged: (value) {
@@ -179,7 +179,7 @@ class _OtpFormState extends State<OtpForm> {
                           ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: kTextColor)
+                              borderSide: BorderSide(color: Colors.teal)
                           )
                       ),
                       onChanged: (value) {
@@ -221,7 +221,7 @@ class _OtpFormState extends State<OtpForm> {
                 ),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: kTextColor)
+                    borderSide: BorderSide(color: Colors.teal)
                 )
             ),
             onChanged: (value) {
