@@ -12,12 +12,8 @@ class VerificationCode extends StatelessWidget {
 
 
     return WillPopScope(
-      
-
       // ignore: missing_return
       onWillPop: () {},
-
-
       child: Container(
 
         color: Colors.blueGrey[900],
@@ -34,7 +30,6 @@ class VerificationCode extends StatelessWidget {
                       style: new TextStyle(fontFamily: 'RobotoMono', decoration: TextDecoration.none, fontSize: 32.0, color: Colors.white54, fontWeight: FontWeight.bold),
                         ),
                     SizedBox(height: 40),
-
                     Text("We have sent an OTP to your registered e-mail id", textAlign: TextAlign.center,
                       style: new TextStyle(fontFamily: 'Roboto', decoration: TextDecoration.none,fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.w200),
                     ),
