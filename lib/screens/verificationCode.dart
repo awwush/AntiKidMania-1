@@ -39,47 +39,14 @@ class VerificationCode extends StatelessWidget {
                       style: new TextStyle(fontFamily: 'Roboto', decoration: TextDecoration.none,fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.w200),
                     ),
                     SizedBox(height: 20),
-                    buildTimer(),
-                    SizedBox(height: 20),
                     OtpForm(),
                     SizedBox(height: 20),
-                    GestureDetector(
-                      onTap: () {
-                        // resend your otp
-                      },
-
-                      child: Text("Resend OTP ",
-                        style: new TextStyle(fontWeight: FontWeight.normal, fontFamily: 'Arial', decoration: TextDecoration.none, fontSize: 15.0, color: Colors.white),
-                      ),
-                    ),
-
                   ],
                 ),
               )
           ),
         ),
       ),
-    );
-  }
-
-  Row buildTimer() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-
-      children: [
-        Text("This code will expire in ", style: TextStyle(fontWeight: FontWeight.normal, color: Colors.redAccent, fontFamily: 'Hind', decoration: TextDecoration.none, fontSize: 13.0),),
-        TweenAnimationBuilder(tween:
-        Tween(begin: 30.0, end: 0),
-          duration: Duration(seconds: 30),
-          builder: (context, value, child) =>
-              Text(
-                "00:${value.toInt()}",
-                style: TextStyle(decoration: TextDecoration.none, color: kPrimaryColor, fontSize: 10.0),
-
-              ),
-          onEnd: () {},
-        )
-      ],
     );
   }
 }

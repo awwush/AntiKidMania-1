@@ -15,225 +15,166 @@ class OtpForm extends StatefulWidget {
 }
 
 class _OtpFormState extends State<OtpForm> {
-  FocusNode pin2FocusNode;
-  FocusNode pin3FocusNode;
-  FocusNode pin4FocusNode;
-  FocusNode pin5FocusNode;
-  FocusNode pin6FocusNode;
+  final pin1FocusNode = FocusNode();
+  final pin2FocusNode = FocusNode();
+  final pin3FocusNode = FocusNode();
+  final pin4FocusNode = FocusNode();
+  final pin5FocusNode = FocusNode();
+  final pin6FocusNode = FocusNode();
+  FocusNode currentFocusNode;
 
   @override
+  void initState() {
+  currentFocusNode = FocusNode();
+  super.initState();
+  }
+  @override
   void dispose() {
-    pin2FocusNode.dispose();
-    pin3FocusNode.dispose();
-    pin4FocusNode.dispose();
-    pin5FocusNode.dispose();
-    pin6FocusNode.dispose();
     super.dispose();
 
     // TODO: implement dispose
     super.dispose();
   }
 
-  void nextField(String value, FocusNode focusNode) {
-    if (value.length == 1) {
-      focusNode.requestFocus();
-    }
-
+  void nextField(String value, FocusNode focusNode){
+          focusNode.requestFocus();
+          print("in focus node");
   }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color : Colors.white54,
-      child: Form(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    width: 20,
-                    child: TextFormField(
-                      maxLength: 1,
-                      autofocus: true,
-                      obscureText: true,
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(fontSize: 24, color: Colors.black),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: otpFieldVertical,
-                              horizontal: otpFieldHorizontal,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Colors.teal)
-                          )
+    return Column(
+      children: [
+        Card(
+          color : Colors.white54,
+          child: Form(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        width: 30,
+                        child: otpField(pin1FocusNode, pin1FocusNode, pin2FocusNode)
                       ),
-                      onChanged: (value) {
-                        //also need to store value
-                        nextField(value, pin2FocusNode);
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                    child: TextFormField(
-                      focusNode: pin2FocusNode,
-                      obscureText: true,
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(color: Colors.white, fontSize: 24),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: otpFieldVertical,
-                            horizontal: otpFieldHorizontal,),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: Colors.teal)
-                          )
+                      SizedBox(
+                        width: 30,
+                        child: otpField(pin1FocusNode, pin2FocusNode, pin3FocusNode),
                       ),
-                      onChanged: (value) {
-                        nextField( value, pin3FocusNode);
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                    child: TextFormField(
-                      focusNode: pin3FocusNode,
-                      obscureText: true,
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(fontSize: 24),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: otpFieldVertical,
-                            horizontal: otpFieldHorizontal,),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: Colors.teal)
-                          )
+                      SizedBox(
+                        width: 30,
+                        child: otpField(pin2FocusNode, pin3FocusNode, pin4FocusNode),
                       ),
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                    child: TextFormField(
-                      focusNode: pin4FocusNode,
-                      obscureText: true,
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(fontSize: 24),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: otpFieldVertical,
-                            horizontal: otpFieldHorizontal,),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: Colors.teal)
-                          )
+                      SizedBox(
+                        width:30,
+                        child: otpField(pin3FocusNode, pin4FocusNode, pin5FocusNode),
                       ),
-                      onChanged: (value) {
-                        nextField( value,  pin4FocusNode);
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                    child: TextFormField(
-                      focusNode: pin5FocusNode,
-                      obscureText: true,
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(fontSize: 24),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: otpFieldVertical,
-                            horizontal: otpFieldHorizontal,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: Colors.teal)
-                          )
+                      SizedBox(
+                        width: 30,
+                        child: otpField(pin4FocusNode, pin5FocusNode, pin6FocusNode),
                       ),
-                      onChanged: (value) {
-                        nextField( value,  pin5FocusNode);
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                    child: TextFormField(
-                      focusNode: pin6FocusNode,
-                      obscureText: true,
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(fontSize: 24),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: otpFieldVertical,
-                            horizontal: otpFieldHorizontal,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: Colors.teal)
-                          )
+                      SizedBox(
+                        width: 30,
+                        child: otpField(pin5FocusNode, pin6FocusNode, pin6FocusNode),
                       ),
-                      onChanged: (value) {
-                        pin6FocusNode.unfocus();
-                      },
-                    ),
+                    ],
                   ),
-                  SizedBox(height: 20),
-                   // DefaultButton
-
-                ],
-              ),
-            ),
-            DefaultButton(
-              text: "Continue",
-              press: () {},
-            )
-          ],
-        ),
-      ),
-    );
-  return Card(
-    child: Center(
-      child: Form(
-        child: Row(
-          children: [
-          SizedBox(
-          width: 20,
-          height: 20,
-          child: TextFormField(
-            autofocus: true,
-            obscureText: true,
-            keyboardType: TextInputType.number,
-            style: TextStyle(fontSize: 24),
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: 20
                 ),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: Colors.teal)
+                DefaultButton(
+                  text: "Verify",
+                  press: () {},
                 )
+              ],
             ),
-            onChanged: (value) {
-              //also need to store value
-              nextField(value, pin2FocusNode);
-            },
+          ),
+        ),
+        SizedBox(height: 20),
+        buildTimer(),
+        SizedBox(height: 10),
+        GestureDetector(
+          onTap: () {
+            debugPrint("tapped resend otp");
+          },
+          child: Text("Resend OTP ",
+            style: new TextStyle
+              (fontWeight: FontWeight.normal,
+                fontFamily: 'Arial',
+                decoration: TextDecoration.none,
+                fontSize: 15.0,
+                color: Colors.white),
           ),
         ),
       ],
+    );
+  }
+
+
+  Widget otpField(FocusNode previousFocusNode, FocusNode currentFocusNode,FocusNode nextFocusNode){
+    return TextField(
+      autofocus: true,
+      maxLength: 1,
+      focusNode: currentFocusNode,
+      // obscureText: true,
+      keyboardType: TextInputType.number,
+      style: TextStyle(color: Colors.white, fontSize: 18),
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        counterText: "",
+          contentPadding: EdgeInsets.symmetric(
+            vertical: 2,
+            horizontal: 2,
+          ),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(color: Colors.teal)
+          )
       ),
-    ),
-    ),
-  );
+      onChanged: (value) {
+        if(value.length == 1) {
+          setState(() {
+            currentFocusNode.unfocus();
+            nextFocusNode.requestFocus();
+            debugPrint(value);
+          });
+          }
+        else if (value.length == 0){
+          setState(() {
+            currentFocusNode.unfocus();
+            previousFocusNode.requestFocus();
+            debugPrint(value);
+          });
+        }
+          },
+    );
+  }
+
+
+  Row buildTimer() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+
+      children: [
+        Text("You can resend otp in: ",
+          style: TextStyle(fontWeight: FontWeight.normal,
+              color: Colors.redAccent,
+              fontFamily: 'Hind',
+              decoration: TextDecoration.none,
+              fontSize: 13.0
+          ),
+        ),
+        TweenAnimationBuilder(tween:
+        Tween(begin: 50.0, end: 0),
+          duration: Duration(seconds: 50),
+          builder: (context, value, child) =>
+              Text(
+                "00:${value.toInt()}",
+                style: TextStyle(decoration: TextDecoration.none, color: kPrimaryColor, fontSize: 10.0),
+              ),
+          onEnd: () {},
+        )
+      ],
+    );
   }
 }

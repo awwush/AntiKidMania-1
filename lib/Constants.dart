@@ -4,6 +4,12 @@ import 'package:anti_kid_mania/sizeConfig.dart';
 const otpFieldVertical = 10.0;
 const otpFieldHorizontal = 40.0;
 
+const otpDecoration = InputDecoration(
+    contentPadding: EdgeInsets.symmetric(
+      // vertical: otpFieldVertical,
+      // horizontal: otpFieldHorizontal,
+    ),
+);
 
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
